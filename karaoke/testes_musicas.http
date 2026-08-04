@@ -1,0 +1,34 @@
+### Listar músicas
+GET http://localhost:3000/api/musicas
+
+###
+
+### Buscar música por ID
+GET http://localhost:3000/api/musicas/0
+
+###
+
+### Criar música
+POST http://localhost:3000/api/musicas
+Content-Type: application/json
+
+{
+    "nome": "Numb",
+    "artista": "Linkin Park"
+}
+
+###
+
+### Atualizar música
+PUT http://localhost:3000/api/musicas/1
+Content-Type: application/json
+
+{
+    "nome": "In The End",
+    "artista": "Linkin Park"
+}
+
+###
+
+### Remover música
+DELETE http://localhost:3000/api/musicas/1
