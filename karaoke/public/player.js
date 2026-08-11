@@ -2,6 +2,8 @@
 // Completem os TODOs seguindo o roteiro da Parte 7 do enunciado.
 // (Antes de mexer aqui, o plano_player.md já deve estar commitado!)
 
+const { musica } = require("../player");
+
 // --- Referências aos elementos da página (index.html) ---
 const listaEl = document.getElementById('listaMusicas');
 const nomeEl = document.getElementById('nomeMusica');
@@ -20,6 +22,18 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Passo 2 (roteiro 7.3) — busca GET /api/musicas e monta a playlist
 async function carregarPlaylist() {
+    const resposta = await fetch('http://localhost:3000/api/musicas', {
+        method: 'GET'
+    })
+
+    const dados = await resposta.json()
+
+    dados.forEach(musica => {
+        const li = document.createmusica("li")
+        li.textContent = musica.nome
+        li.addEventListener('click', () => escolherMusica(musica.id))
+        listaEl.appendChild(li)
+    });
     // TODO: fazer o fetch de '/api/musicas' e converter com resposta.json()
     // TODO: para cada música, criar um <li> com "nome — artista",
     //       adicionar item.addEventListener('click', () => escolherMusica(musica.id))
@@ -28,6 +42,15 @@ async function carregarPlaylist() {
 
 // Passo 3 (roteiro 7.4) — busca GET /api/musicas/:id e prepara o palco
 async function escolherMusica(id) {
+    const resposta = await fetch(`http://localhost:3000/api/musicas/${id}`, {
+        method: 'GET'
+    })
+
+    const musicaAtual = await resposta.json()
+    nomeEl.textContent = musicaAtual.nome
+    
+
+
     // TODO: buscar a música completa (com partes) na API
     // TODO: guardar o resultado em musicaAtual
     // TODO: mostrar nome e artista no palco (nomeEl, artistaEl)
