@@ -11,10 +11,7 @@ class MusicaDAO {
     _carregarDadosIniciais() {
         const myHero = this.inserir('My Hero', 'Foo Fighters');
 
-        // Aqui serão adicionadas as partes da música,
-        // usando myHero.addParte(...)
-        // Se você já tiver as partes no seu player.js,
-        // podemos colocar elas aqui depois.
+        myHero.addParte('Too alarmin now to talk about \n Take your pictures down and shake it out', 8000)
     }
 
     listarTodas() {

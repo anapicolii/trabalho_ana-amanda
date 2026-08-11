@@ -1,8 +1,7 @@
 class Parte{
-    constructor( letra, tempoEspera, tag ){
+    constructor( letra, tempoEspera){
         this.letra = letra;
         this.tempoEspera = tempoEspera;
-        this.tag = tag;
     }
 
 }

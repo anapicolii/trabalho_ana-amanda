@@ -11,12 +11,13 @@ class Musica {
         }
     }
 
-    addParte(parte) { 
+    addParte(parte, tempo) { 
         try {
-            if( !parte.letra || !parte.tempoEspera || !parte.tag ){
+            if( !parte || !tempo ){
                 throw new Error("Parte da Musica com problema!");
                 
             }
+
             this.partes.push(parte);
 
         } catch (error) {

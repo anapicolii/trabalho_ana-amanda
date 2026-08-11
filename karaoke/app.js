@@ -1,9 +1,17 @@
 const express = require('express');
+const path = require('path')
 
 const app = express();
 const musicaDAO = require('../karaoke/DAO/musicaDAO.js');
 
 app.use(express.json());
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    const html = path.join(__dirname,'public', 'index.html')
+
+    res.sendFile(html)
+})
 
 app.get('/api/musicas', (req, res) => {
     const musicas = musicaDAO.listarTodas();
@@ -46,8 +54,7 @@ app.get('/api/musicas/:id', (req, res) => {
 
 app.post('/api/musicas', (req, res) => {
     const { nome, artista } = req.body;
-
-    // Verifica campos obrigatórios
+    
     if (!nome || !artista) {
         return res.status(400).json({
             erro: 'Campos obrigatórios: nome, artista'
