@@ -1,34 +1,75 @@
-### Listar músicas
-GET http://localhost:3000/api/musicas
+@baseUrl = http://localhost:3000
 
-###
 
-### Buscar música por ID
-GET http://localhost:3000/api/musicas/0
+### ============================================
+### TESTES DA API DO KARAOKÊ
+### ============================================
 
-###
 
-### Criar música
-POST http://localhost:3000/api/musicas
+### 1. GET - Listar todas as músicas
+GET {{baseUrl}}/api/musicas
+
+
+### 2. GET - Buscar música por ID existente
+GET {{baseUrl}}/api/musicas/1
+
+
+### 3. GET - Buscar música por ID inexistente
+### Esperado: 404 "erro": "Música com id 999 não encontrada"
+GET {{baseUrl}}/api/musicas/999
+
+
+### 4. POST - Criar uma nova música
+### Esperado: 201
+POST {{baseUrl}}/api/musicas
 Content-Type: application/json
 
 {
-    "nome": "Numb",
-    "artista": "Linkin Park"
+    "nome": "Smells Like Teen Spirit",
+    "artista": "Nirvana"
 }
 
-###
 
-### Atualizar música
-PUT http://localhost:3000/api/musicas/1
+### 5. POST - Criar música sem artista
+### Esperado: 400
+POST {{baseUrl}}/api/musicas
 Content-Type: application/json
 
 {
-    "nome": "In The End",
-    "artista": "Linkin Park"
+    "erro": "Campos obrigatórios: nome, artista"
 }
 
-###
 
-### Remover música
-DELETE http://localhost:3000/api/musicas/1
+### 6. PUT - Atualizar uma música existente
+### Esperado: 200
+PUT {{baseUrl}}/api/musicas/1
+Content-Type: application/json
+
+{
+    "nome": "My Hero (Live)",
+    "artista": "Foo Fighters (Wembley 2008)"
+}
+
+
+### 7. PUT - Atualizar música inexistente
+### Esperado: 404 
+PUT {{baseUrl}}/api/musicas/999
+Content-Type: application/json
+
+{
+    "erro": "Música com id 999 não encontrada"
+}
+
+
+### 8. DELETE - Remover uma música
+### Esperado: 200
+DELETE {{baseUrl}}/api/musicas/2
+
+
+### 9. DELETE - Remover música inexistente
+### Esperado: 404
+DELETE {{baseUrl}}/api/musicas/999
+
+
+### 10. GET - Verificar estado final
+GET {{baseUrl}}/api/musicas

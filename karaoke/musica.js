@@ -1,23 +1,22 @@
-
 class Musica {
 
-    constructor(nome, artista) {
-        //atributos com this.atrib
+    constructor(nome, artista, id) {
         this.nome = nome;
         this.artista = artista;
-        this.partes = []; // associacao com Parte
+        this.partes = []; 
+        if(!id){ 
+            this.id=null;
+        }else{
+            this.id = id;
+        }
     }
 
-    //metodos
-    addParte(parte) { //parte é objeto de Parte
+    addParte(parte) { 
         try {
-            // valida parte
             if( !parte.letra || !parte.tempoEspera || !parte.tag ){
-                // parte tem problema
                 throw new Error("Parte da Musica com problema!");
                 
             }
-            // armazena parte em partes
             this.partes.push(parte);
 
         } catch (error) {
@@ -26,7 +25,6 @@ class Musica {
     }
 
     getLetraInteira(){
-        // this.partes -->todas as partes
 
         let letra = "";
 

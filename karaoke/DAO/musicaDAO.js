@@ -1,13 +1,20 @@
-const { Musica } = require("../musica");
-const { Parte } = require("../parte");
+const { Musica } = require('../musica');
 
 class MusicaDAO {
     constructor() {
-        // "Banco de dados" em memória
         this.musicas = [];
-        this.proximoId = 0;
+        this.proximoId = 1;
 
         this._carregarDadosIniciais();
+    }
+
+    _carregarDadosIniciais() {
+        const myHero = this.inserir('My Hero', 'Foo Fighters');
+
+        // Aqui serão adicionadas as partes da música,
+        // usando myHero.addParte(...)
+        // Se você já tiver as partes no seu player.js,
+        // podemos colocar elas aqui depois.
     }
 
     listarTodas() {
@@ -15,31 +22,17 @@ class MusicaDAO {
     }
 
     buscarPorId(id) {
-        return this.musicas.find(m => m.id === id) || null;
+        return this.musicas.find( m => m.id === id) || null;
     }
 
     inserir(nome, artista) {
         const novaMusica = new Musica(nome, artista);
+
         novaMusica.id = this.proximoId++;
 
         this.musicas.push(novaMusica);
 
         return novaMusica;
-    }
-
-    adicionarPartes(idMusica, parte) {
-        if (!(parte instanceof Parte)) {
-            return false;
-        }
-
-        const musica = this.buscarPorId(idMusica);
-
-        if (!musica) {
-            return false;
-        }
-
-        musica.addParte(parte);
-        return true;
     }
 
     atualizar(id, nome, artista) {
@@ -63,28 +56,6 @@ class MusicaDAO {
         }
 
         return this.musicas.splice(indice, 1)[0];
-    }
-
-    _carregarDadosIniciais() {
-
-        const myHero = this.inserir("My Hero", "Foo Fighters");
-
-        const tooAlarmin = "Too alarmin now to talk about \n Take your pictures down and shake it out";
-        const truthOrCon = "Truth or consequence, say it aloud \n Use that evidence, race it around";
-        const thereGoes = "There goes my hero";
-
-        myHero.addParte(
-            new Parte(tooAlarmin, 4000, "verso1")
-        );
-
-        myHero.addParte(
-             new Parte(truthOrCon, 4000, "verso2")
-        );
-
-        myHero.addParte(
-            new Parte(thereGoes, 5000, "verso3")
-        );
-    
     }
 }
 

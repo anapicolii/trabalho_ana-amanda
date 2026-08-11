@@ -1,5 +1,3 @@
-
-
 class Parte{
     constructor( letra, tempoEspera, tag ){
         this.letra = letra;
