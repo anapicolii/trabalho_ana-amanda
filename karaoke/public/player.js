@@ -2,8 +2,6 @@
 // Completem os TODOs seguindo o roteiro da Parte 7 do enunciado.
 // (Antes de mexer aqui, o plano_player.md já deve estar commitado!)
 
-const { musica } = require("../player");
-
 // --- Referências aos elementos da página (index.html) ---
 const listaEl = document.getElementById('listaMusicas');
 const nomeEl = document.getElementById('nomeMusica');
@@ -29,7 +27,7 @@ async function carregarPlaylist() {
     const dados = await resposta.json()
 
     dados.forEach(musica => {
-        const li = document.createmusica("li")
+        const li = document.createElement("li")
         li.textContent = musica.nome
         li.addEventListener('click', () => escolherMusica(musica.id))
         listaEl.appendChild(li)
@@ -46,10 +44,10 @@ async function escolherMusica(id) {
         method: 'GET'
     })
 
-    const musicaAtual = await resposta.json()
+    musicaAtual = await resposta.json()
     nomeEl.textContent = musicaAtual.nome
-    
-
+    artistaEl.textContent = musicaAtual.artista
+    btnTocar.disabled = false
 
     // TODO: buscar a música completa (com partes) na API
     // TODO: guardar o resultado em musicaAtual
@@ -58,12 +56,29 @@ async function escolherMusica(id) {
 }
 
 // Passo 4 (roteiro 7.5) — percorre as partes com await sleep até o final
-async function tocar() {
+    async function tocar() {
+        btnTocar.disabled = true
+        for (let i = 0; i < musicaAtual.partes.length; i++) {
+            const parte = musicaAtual.partes[i];
+
+            letraEl.innerHTML += `${parte.letra} <br>`;
+
+            const proximaParte = musicaAtual.partes[i + 1];
+
+            if (proximaParte) {
+                const intervalo = proximaParte.tempo - parte.tempo;
+                await sleep(intervalo);
+            }
+        }
+        letraEl.innerHTML += `FIM`
+        btnTocar.disabled = false
+    }
+
     // TODO: implementar seguindo o roteiro 7.5
     //       (desabilitar o botão, percorrer as partes mostrando tag, letra
     //        e contador "parte X de Y", esperar o tempoEspera de cada uma,
     //        mostrar a mensagem de fim e reabilitar o botão)
-}
+
 
 btnTocar.addEventListener('click', tocar);
 
